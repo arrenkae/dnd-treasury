@@ -3,15 +3,12 @@ import "../globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import {
-  VisualEditing,
   toPlainText,
   type PortableTextBlock,
 } from "next-sanity";
 import { Inter } from "next/font/google";
-import { draftMode } from "next/headers";
 import { Suspense } from "react";
 
-import AlertBanner from "./alert-banner";
 import PortableText from "./portable-text";
 
 import type { SettingsQueryResult } from "@/sanity.types";
@@ -106,13 +103,11 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} bg-white text-black`}>
       <body>
         <section className="min-h-screen">
-          {draftMode().isEnabled && <AlertBanner />}
           <main>{children}</main>
           <Suspense>
             <Footer />
           </Suspense>
         </section>
-        {draftMode().isEnabled && <VisualEditing />}
         <SpeedInsights />
       </body>
     </html>
