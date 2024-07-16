@@ -2,11 +2,7 @@ import "../globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import {
-  VisualEditing,
-  toPlainText,
-  type PortableTextBlock,
-} from "next-sanity";
+import { VisualEditing, toPlainText, type PortableTextBlock } from "next-sanity";
 import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
 import { Suspense } from "react";
@@ -23,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch<SettingsQueryResult>({
     query: settingsQuery,
     // Metadata should never contain stega
-    stega: false,
+    stega: false
   });
   const title = settings?.title || demo.title;
   const description = settings?.description || demo.description;
@@ -31,9 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = resolveOpenGraphImage(settings?.ogImage);
   let metadataBase: URL | undefined = undefined;
   try {
-    metadataBase = settings?.ogImage?.metadataBase
-      ? new URL(settings.ogImage.metadataBase)
-      : undefined;
+    metadataBase = settings?.ogImage?.metadataBase ? new URL(settings.ogImage.metadataBase) : undefined;
   } catch {
     // ignore
   }
@@ -41,24 +35,24 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase,
     title: {
       template: `%s | ${title}`,
-      default: title,
+      default: title
     },
     description: toPlainText(description),
     openGraph: {
-      images: ogImage ? [ogImage] : [],
-    },
+      images: ogImage ? [ogImage] : []
+    }
   };
 }
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap",
+  display: "swap"
 });
 
 async function Footer() {
   const data = await sanityFetch<SettingsQueryResult>({
-    query: settingsQuery,
+    query: settingsQuery
   });
   const footer = data?.footer || [];
 
@@ -82,10 +76,7 @@ async function Footer() {
               >
                 Read Documentation
               </a>
-              <a
-                href="https://github.com/vercel/next.js/tree/canary/examples/cms-sanity"
-                className="mx-3 font-bold hover:underline"
-              >
+              <a href="https://github.com/vercel/next.js/tree/canary/examples/cms-sanity" className="mx-3 font-bold hover:underline">
                 View on GitHub
               </a>
             </div>
@@ -96,11 +87,7 @@ async function Footer() {
   );
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} bg-white text-black`}>
       <body>
